@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Camper } from "@/types/camper";
 
 interface CamperFilters {
   location?: string;
@@ -20,4 +21,6 @@ export const fetchCampers = async (
   Object.entries(filters).forEach(([k, v]) => {
     if (v) params[k] = v;
   });
+  const { data } = await api.get("/campers", { params });
+  return data as { items: Camper[]; total: number };
 };
