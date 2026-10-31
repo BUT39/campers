@@ -1,11 +1,17 @@
 import axios from "axios";
-import { Camper } from "@/types/camper";
+
+import type {
+  CamperListResponse,
+  Forms,
+  Transmissions,
+  Engines,
+} from "@/types/camper";
 
 interface CamperFilters {
   location?: string;
-  form?: string;
-  transmission?: string;
-  engine?: string;
+  form?: Forms;
+  transmission?: Transmissions;
+  engine?: Engines;
 }
 
 const api = axios.create({
@@ -14,13 +20,13 @@ const api = axios.create({
 
 export const fetchCampers = async (
   filters: CamperFilters,
-  page: 1,
-  perPage: 5,
-) => {
+  page = 1,
+  perPage = 4,
+): Promise<CamperListResponse> => {
   const params: Record<string, string | number> = { page, perPage };
   Object.entries(filters).forEach(([k, v]) => {
     if (v) params[k] = v;
   });
-  const { data } = await api.get("/campers", { params });
-  return data as { items: Camper[]; total: number };
+  const { data } = await api.get<CamperListResponse>("/campers", { params });
+  return data;
 };
