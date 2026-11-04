@@ -2,6 +2,7 @@ import Header from "@/components/Header/Header";
 import { Metadata } from "next";
 import "./globals.css";
 import { Inter, Manrope } from "next/font/google";
+import TanStackQueryProvider from "@/components/TanStackQueryProvider/TanStackQueryProvider";
 
 const inter = Inter({
   subsets: ["latin", "cyrillic"],
@@ -29,7 +30,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${manrope.variable}`}>
       <body>
         <Header />
-        {children}
+        <TanStackQueryProvider>{children}</TanStackQueryProvider>
       </body>
     </html>
   );
